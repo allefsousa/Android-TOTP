@@ -1,18 +1,19 @@
-package com.developer.allefsousa.toptp
+package com.developer.allefsousa.toptp.generator
 
+import com.developer.allefsousa.toptp.config.TimeBasedOneTimePasswordConfig
+import org.apache.commons.codec.binary.Base32
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.floor
 
 
-open class TimeBasedOneTimePasswordGenerator(private val secret: ByteArray, private val config: TimeBasedOneTimePasswordConfig) {
-    // -- Companion Object -------------------------------------------------------------------------------------------- //
-    // -- Properties -------------------------------------------------------------------------------------------------- //
+class TimeBasedOneTimePasswordGenerator(
+    private val secret: ByteArray,
+    private val config: TimeBasedOneTimePasswordConfig
+) {
 
-    private val hmacOneTimePasswordGenerator: HmacOneTimePasswordGenerator = HmacOneTimePasswordGenerator(secret, config)
-
-    // -- Initialization ---------------------------------------------------------------------------------------------- //
-    // -- Exposed Methods --------------------------------------------------------------------------------------------- //
+    private val hmacOneTimePasswordGenerator: HmacOneTimePasswordGenerator =
+        HmacOneTimePasswordGenerator(secret, config)
 
     /**
      * Calculate the current time slot.
@@ -30,7 +31,10 @@ open class TimeBasedOneTimePasswordGenerator(private val secret: ByteArray, priv
             return 0
         }
 
-        return floor(timestamp.toDouble().div(TimeUnit.MILLISECONDS.convert(config.timeStep, config.timeStepUnit))).toLong()
+        return floor(
+            timestamp.toDouble()
+                .div(TimeUnit.MILLISECONDS.convert(config.timeStep, config.timeStepUnit))
+        ).toLong()
     }
 
     /**
@@ -51,7 +55,8 @@ open class TimeBasedOneTimePasswordGenerator(private val secret: ByteArray, priv
      * @return The Unix timestamp where the given time slot starts.
      */
     fun timeslotStart(counter: Long): Long {
-        val timeStepMillis = TimeUnit.MILLISECONDS.convert(config.timeStep, config.timeStepUnit).toDouble()
+        val timeStepMillis =
+            TimeUnit.MILLISECONDS.convert(config.timeStep, config.timeStepUnit).toDouble()
         return (counter * timeStepMillis).toLong()
     }
 
@@ -111,7 +116,4 @@ open class TimeBasedOneTimePasswordGenerator(private val secret: ByteArray, priv
             .digits(config.codeDigits)
             .period(config.timeStep, config.timeStepUnit)
     }
-
-    // -- Private Methods --------------------------------------------------------------------------------------------- //
-    // -- Inner Type -------------------------------------------------------------------------------------------------- //
 }

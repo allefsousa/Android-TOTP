@@ -1,10 +1,12 @@
-package com.developer.allefsousa.toptp
+package com.developer.allefsousa.toptp.generator
 
+import com.developer.allefsousa.toptp.config.HmacOneTimePasswordConfig
 import org.apache.commons.codec.binary.Base32
 import java.nio.ByteBuffer
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 import kotlin.experimental.and
+import kotlin.math.pow
 
 
 /**
@@ -14,12 +16,9 @@ import kotlin.experimental.and
  * @property secret the shared secret as a byte array.
  * @property config the configuration for this generator.
  */
-open class HmacOneTimePasswordGenerator(private val secret: ByteArray,
-                                        private val config: HmacOneTimePasswordConfig) {
-    // -- Companion Object -------------------------------------------------------------------------------------------- //
-    // -- Properties -------------------------------------------------------------------------------------------------- //
-    // -- Initialization ---------------------------------------------------------------------------------------------- //
-    // -- Exposed Methods --------------------------------------------------------------------------------------------- //
+class HmacOneTimePasswordGenerator(private val secret: ByteArray,
+                                        private val config: HmacOneTimePasswordConfig
+) {
 
     /**
      * Generates a code representing a HMAC-based one-time password.
@@ -119,7 +118,4 @@ open class HmacOneTimePasswordGenerator(private val secret: ByteArray,
             .algorithm(config.hmacAlgorithm)
             .digits(config.codeDigits)
     }
-
-    // -- Private Methods --------------------------------------------------------------------------------------------- //
-    // -- Inner Type -------------------------------------------------------------------------------------------------- //
 }

@@ -1,4 +1,4 @@
-package com.developer.allefsousa.toptp
+package com.developer.allefsousa.toptp.generator
 
 import com.developer.allefsousa.toptp.enum.HmacAlgorithm
 import java.io.ByteArrayOutputStream
@@ -11,8 +11,7 @@ import java.nio.charset.StandardCharsets
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
-open class OtpAuthUriBuilder<S : OtpAuthUriBuilder<S>>(
+ open class OtpAuthUriBuilder<S : OtpAuthUriBuilder<S>>(
     private val type: String,
     base32Secret: ByteArray,
     removePaddingFromBase32Secret: Boolean = true,
