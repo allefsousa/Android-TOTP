@@ -11,7 +11,8 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
+
 }
 rootProject.name = "Android-totop"
 include ':app'
-include ':toptp'
+include ':totp'
